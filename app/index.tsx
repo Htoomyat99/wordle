@@ -2,6 +2,7 @@ import Icon from "@/assets/images/wordle-icon.svg";
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import { format } from "date-fns";
 
 export default function Index() {
   return (
@@ -26,20 +27,20 @@ export default function Index() {
         </Link>
 
         <Pressable style={styles.btn}>
-          <Text style={styles.btnText}>Play</Text>
+          <Text style={styles.btnText}>Log in</Text>
         </Pressable>
 
-        <Pressable>
-          <Text style={[styles.btnText, styles.primaryText]}>Log in</Text>
-        </Pressable>
-
-        <Pressable style={styles.btnText}>
-          <Text style={[styles.btnText, styles.primaryText]}>Subscribe</Text>
+        <Pressable style={styles.btn}>
+          <Text style={styles.btnText}>Subscribe</Text>
         </Pressable>
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.text}>Made by simon</Text>
+        <Text style={styles.footerDate}>
+          {format(new Date(), "MMMM, d, yyyy")}
+        </Text>
+        <Text style={styles.footerText}>No. 1151</Text>
+        <Text style={styles.footerText}>Made by Simon</Text>
       </View>
     </View>
   );
@@ -73,6 +74,14 @@ const styles = StyleSheet.create({
   footer: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  footerDate: {
+    fontSize: moderateScale(14),
+    fontFamily: "FrankRuhlLibre_800ExtraBold",
+  },
+  footerText: {
+    fontSize: moderateScale(14),
+    marginTop: verticalScale(5),
   },
   btn: {
     justifyContent: "center",
