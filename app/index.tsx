@@ -7,18 +7,33 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import {
+  moderateScale,
+  s,
+  scale,
+  verticalScale,
+} from "react-native-size-matters";
 import { format } from "date-fns";
 import { Colors } from "@/constants/Colors";
 import ThemeText from "@/components/ThemeText";
+import { useRef } from "react";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import SubscribeModal from "@/components/SubscribeModal";
 
 export default function Index() {
   const colorScheme = useColorScheme();
   const backgroundColor = Colors[colorScheme ?? "light"].background;
   const textColor = Colors[colorScheme ?? "light"].text;
+  const subscribeModalRef = useRef<BottomSheetModal>(null);
+
+  const handlePresentSubscribeModal = () => {
+    subscribeModalRef.current?.present();
+  };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
+      <SubscribeModal ref={subscribeModalRef} />
+
       <View style={styles.header}>
         <Icon width={scale(100)} height={verticalScale(70)} />
 
@@ -47,7 +62,10 @@ export default function Index() {
           <ThemeText style={styles.btnText}>Log in</ThemeText>
         </Pressable>
 
-        <Pressable style={[styles.btn, { borderColor: textColor }]}>
+        <Pressable
+          onPress={handlePresentSubscribeModal}
+          style={[styles.btn, { borderColor: textColor }]}
+        >
           <ThemeText style={styles.btnText}>Subscribe</ThemeText>
         </Pressable>
       </View>
