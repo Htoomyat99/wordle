@@ -1,5 +1,5 @@
 import Icon from "@/assets/images/wordle-icon.svg";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import {
   Pressable,
   StyleSheet,
@@ -19,6 +19,7 @@ import ThemeText from "@/components/ThemeText";
 import { useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import SubscribeModal from "@/components/SubscribeModal";
+import { SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 
 export default function Index() {
   const colorScheme = useColorScheme();
@@ -26,12 +27,15 @@ export default function Index() {
   const textColor = Colors[colorScheme ?? "light"].text;
   const subscribeModalRef = useRef<BottomSheetModal>(null);
 
+  const { signOut } = useAuth();
+  const router = useRouter();
+
   const handlePresentSubscribeModal = () => {
     subscribeModalRef.current?.present();
   };
 
   return (
-    <View style={[styles.container, { backgroundColor }]}>
+    <View style={[styles.container, {}]}>
       <SubscribeModal ref={subscribeModalRef} />
 
       <View style={styles.header}>
@@ -58,9 +62,23 @@ export default function Index() {
           </Pressable>
         </Link>
 
-        <Pressable style={[styles.btn, { borderColor: textColor }]}>
-          <ThemeText style={styles.btnText}>Log in</ThemeText>
-        </Pressable>
+        <SignedOut>
+          <Pressable
+            onPress={() => router.push("/login")}
+            style={[styles.btn, { borderColor: textColor }]}
+          >
+            <ThemeText style={styles.btnText}>Log in</ThemeText>
+          </Pressable>
+        </SignedOut>
+
+        <SignedIn>
+          <Pressable
+            onPress={() => signOut()}
+            style={[styles.btn, { borderColor: textColor }]}
+          >
+            <ThemeText style={styles.btnText}>Sign out</ThemeText>
+          </Pressable>
+        </SignedIn>
 
         <Pressable
           onPress={handlePresentSubscribeModal}
