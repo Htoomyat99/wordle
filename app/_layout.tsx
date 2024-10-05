@@ -21,18 +21,24 @@ import Logo from "@/assets/images/nyt-logo.svg";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
+import { LogBox } from "react-native";
+
+LogBox.ignoreAllLogs(true);
 
 SplashScreen.preventAutoHideAsync();
 
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+
+if (!publishableKey) {
+  throw new Error(
+    "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
+  );
+}
+
 export default function RootLayout() {
   const router = useRouter();
-  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+  const colorSheme = useColorScheme();
 
-  if (!publishableKey) {
-    throw new Error(
-      "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
-    );
-  }
   const colorTheme = useColorScheme();
   const [fontsLoaded] = useFonts({
     FrankRuhlLibre_800ExtraBold,
@@ -72,6 +78,19 @@ export default function RootLayout() {
                         color={Colors.light.gray}
                       />
                     ),
+                  }}
+                />
+
+                <Stack.Screen
+                  name="game"
+                  options={{
+                    headerBackTitle: "Wordle",
+                    headerTintColor: colorSheme === "dark" ? "#FFF" : "#000",
+                    title: "",
+                    headerBackTitleStyle: {
+                      fontSize: moderateScale(22),
+                      fontFamily: "FrankRuhlLibre_800ExtraBold",
+                    },
                   }}
                 />
               </Stack>
