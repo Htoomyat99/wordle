@@ -23,7 +23,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 import { LogBox } from "react-native";
 
-LogBox.ignoreAllLogs(true);
+// LogBox.ignoreAllLogs(true);
 
 SplashScreen.preventAutoHideAsync();
 
