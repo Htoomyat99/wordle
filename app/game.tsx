@@ -77,9 +77,25 @@ const Page = () => {
       if (currentWord === word) {
         //TODO show end screen
         console.log("you win, word found");
+        router.push({
+          pathname: "/end",
+          params: {
+            word: word,
+            gameField: JSON.stringify(rows),
+            win: "true",
+          },
+        });
       } else if (currentRow + 1 >= rows.length) {
         //TODO show end screen
         console.log("you lose, word not found");
+        router.push({
+          pathname: "/end",
+          params: {
+            word: word,
+            gameField: JSON.stringify(rows),
+            win: "false",
+          },
+        });
       }
     }, 0);
 
