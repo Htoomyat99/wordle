@@ -7,8 +7,10 @@ import React, { useRef, useState } from "react";
 import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import { moderateScale, ms, s, vs } from "react-native-size-matters";
 import { words } from "@/utils/targetWords";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import SettingModal from "@/components/SettingModal";
 
-const ROWS = 6;
+const ROWS = 2;
 
 const Page = () => {
   const colorScheme = useColorScheme();
@@ -27,10 +29,15 @@ const Page = () => {
   const [yellowLetters, setYellowLetters] = useState<string[]>([]);
   const [grayLetters, setGrayLetters] = useState<string[]>([]);
 
-  const [word, setWord] = useState(
-    words[Math.floor(Math.random() * words.length)]
-  );
-  // const [word, setWord] = useState("their");
+  const settingModalRef = useRef<BottomSheetModal>(null);
+  const handlePresentSettingModal = () => {
+    settingModalRef.current?.present();
+  };
+
+  // const [word, setWord] = useState(
+  //   words[Math.floor(Math.random() * words.length)]
+  // );
+  const [word, setWord] = useState("their");
   const wordLetters = word.split("");
 
   const colStateRef = useRef(currnetCol);
@@ -162,6 +169,7 @@ const Page = () => {
 
   return (
     <View style={{ ...styles.container, backgroundColor }}>
+      <SettingModal ref={settingModalRef} />
       <Stack.Screen
         options={{
           headerRight: () => (
@@ -180,6 +188,7 @@ const Page = () => {
                 name="settings-sharp"
                 size={moderateScale(26)}
                 color={textColor}
+                onPress={handlePresentSettingModal}
               />
             </View>
           ),

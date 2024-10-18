@@ -1,27 +1,28 @@
-import { Stack, useRouter } from "expo-router";
+import Logo from "@/assets/images/nyt-logo.svg";
+import { storage } from "@/components/storage";
+import { Colors } from "@/constants/Colors";
+import { tokenCache } from "@/utils/cache";
+import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
 import {
-  useFonts,
-  FrankRuhlLibre_800ExtraBold,
   FrankRuhlLibre_500Medium,
+  FrankRuhlLibre_800ExtraBold,
   FrankRuhlLibre_900Black,
+  useFonts,
 } from "@expo-google-fonts/frank-ruhl-libre";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { Pressable, useColorScheme } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { Stack, useRouter } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import { Appearance, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
-import { tokenCache } from "@/utils/cache";
-import Logo from "@/assets/images/nyt-logo.svg";
+import { useMMKVBoolean } from "react-native-mmkv";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "@/constants/Colors";
-import { LogBox } from "react-native";
 
 // LogBox.ignoreAllLogs(true);
 
@@ -38,6 +39,12 @@ if (!publishableKey) {
 export default function RootLayout() {
   const router = useRouter();
   const colorSheme = useColorScheme();
+
+  const [dark] = useMMKVBoolean("dark-mode", storage);
+
+  useEffect(() => {
+    Appearance.setColorScheme(dark ? "dark" : "light");
+  }, [dark]);
 
   const colorTheme = useColorScheme();
   const [fontsLoaded] = useFonts({

@@ -1,7 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Pressable,
@@ -12,8 +12,10 @@ import {
 } from "react-native";
 import { ms, s, vs } from "react-native-size-matters";
 import Icon from "@/assets/images/wordle-icon.svg";
-import { SignedIn, SignedOut } from "@clerk/clerk-expo";
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import * as MailComposer from "expo-mail-composer";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { FIRESTORE_DB } from "@/utils/firebaseConfig";
 
 const End = () => {
   const { win, word, gameField } = useLocalSearchParams<{
@@ -22,17 +24,58 @@ const End = () => {
     gameField?: string;
   }>();
 
+  const { user } = useUser();
+
+  const [userScore, setUserScore] = useState<any>(null);
+
+  useEffect(() => {
+    if (user) {
+      updateHighScore();
+    }
+  }, [user]);
+
+  const updateHighScore = async () => {
+    console.log("update high score", user);
+
+    if (!user) return;
+
+    const docRef = doc(FIRESTORE_DB, `highscore/${user.id}`);
+    const docSnap = await getDoc(docRef);
+
+    console.log("doc >>>", docSnap);
+
+    let newScore = {
+      played: 1,
+      wins: win === "true" ? 1 : 0,
+      lastGame: win === "true" ? "win" : "loss",
+      currentSteak: win === "true" ? 1 : 0,
+    };
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+
+      newScore = {
+        played: data.played + 1,
+        wins: win === "true" ? data.wins + 1 : data.wins,
+        lastGame: win === "true" ? "win" : "loss",
+        currentSteak:
+          win === "true" && data.lastGame === "win"
+            ? data.currentSteak + 1
+            : win === "true"
+            ? 1
+            : 0,
+      };
+    }
+
+    await setDoc(docRef, newScore);
+    setUserScore(newScore);
+  };
+
   console.log(win);
 
   const colorScheme = useColorScheme();
 
   const router = useRouter();
-
-  const [userScore, setUserScore] = useState({
-    played: 42,
-    wins: 2,
-    currentSteak: 1,
-  });
 
   const shareGame = () => {
     const game = JSON.parse(gameField!);
@@ -143,17 +186,17 @@ const End = () => {
 
           <View style={styles.stats}>
             <View>
-              <Text style={styles.score}>{userScore.played}</Text>
+              <Text style={styles.score}>{userScore?.played}</Text>
 
               <Text>Played</Text>
             </View>
             <View>
-              <Text style={styles.score}>{userScore.wins}</Text>
+              <Text style={styles.score}>{userScore?.wins}</Text>
 
               <Text>Wins</Text>
             </View>
             <View>
-              <Text style={styles.score}>{userScore.currentSteak}</Text>
+              <Text style={styles.score}>{userScore?.currentSteak}</Text>
 
               <Text>Current Steak</Text>
             </View>

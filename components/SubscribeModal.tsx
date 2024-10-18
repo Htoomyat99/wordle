@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import { screenPadding } from "@/constants/Token";
 import Ionicons from "@expo/vector-icons/build/Ionicons";
 import {
@@ -13,7 +14,6 @@ import React, { forwardRef, useCallback, useMemo } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export type Ref = BottomSheetModal;
 
