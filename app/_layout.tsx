@@ -19,7 +19,7 @@ import {
 import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { Appearance, useColorScheme } from "react-native";
+import { Appearance, Platform, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useMMKVBoolean } from "react-native-mmkv";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
@@ -43,7 +43,9 @@ export default function RootLayout() {
   const [dark] = useMMKVBoolean("dark-mode", storage);
 
   useEffect(() => {
-    Appearance.setColorScheme(dark ? "dark" : "light");
+    if (Platform.OS !== "web") {
+      Appearance.setColorScheme(dark ? "dark" : "light");
+    }
   }, [dark]);
 
   const colorTheme = useColorScheme();

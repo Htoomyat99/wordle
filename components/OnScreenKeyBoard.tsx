@@ -2,6 +2,7 @@ import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import {
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -33,7 +34,8 @@ const OnScreenKeyBoard = ({
   grayLetters,
 }: onKeyBoardProps) => {
   const { width } = useWindowDimensions();
-  const keyWidth = (width - s(60)) / keys[0].length;
+  const keyWidth =
+    Platform.OS === "web" ? s(60) : (width - s(60)) / keys[0].length;
   const keyHeght = vs(40);
 
   const isSpecailKey = (key: string) => ["ENTER", "BACKSPACE"].includes(key);

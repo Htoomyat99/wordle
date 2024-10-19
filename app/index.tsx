@@ -20,6 +20,13 @@ import { useRef } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import SubscribeModal from "@/components/SubscribeModal";
 import { SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
+import Animated, {
+  FadeIn,
+  FadeInDown,
+  FadeInLeft,
+} from "react-native-reanimated";
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function Index() {
   const colorScheme = useColorScheme();
@@ -38,7 +45,7 @@ export default function Index() {
     <View style={[styles.container, {}]}>
       <SubscribeModal ref={subscribeModalRef} />
 
-      <View style={styles.header}>
+      <Animated.View style={styles.header} entering={FadeInDown}>
         <Icon width={scale(100)} height={verticalScale(70)} />
 
         <ThemeText style={styles.title}>Worlde</ThemeText>
@@ -46,7 +53,7 @@ export default function Index() {
         <ThemeText style={styles.text}>
           Get 6 chances to guess a 5-letter word.
         </ThemeText>
-      </View>
+      </Animated.View>
 
       <View style={styles.menu}>
         <Link
@@ -57,44 +64,47 @@ export default function Index() {
             { backgroundColor: colorScheme === "light" ? "#000" : "#4a4a4a" },
           ]}
         >
-          <Pressable>
+          <AnimatedPressable entering={FadeInLeft}>
             <Text style={[styles.btnText, styles.primaryText]}>Play</Text>
-          </Pressable>
+          </AnimatedPressable>
         </Link>
 
         <SignedOut>
-          <Pressable
+          <AnimatedPressable
+            entering={FadeInLeft.delay(100)}
             onPress={() => router.push("/login")}
             style={[styles.btn, { borderColor: textColor }]}
           >
             <ThemeText style={styles.btnText}>Log in</ThemeText>
-          </Pressable>
+          </AnimatedPressable>
         </SignedOut>
 
         <SignedIn>
-          <Pressable
+          <AnimatedPressable
+            entering={FadeInLeft.delay(200)}
             onPress={() => signOut()}
             style={[styles.btn, { borderColor: textColor }]}
           >
             <ThemeText style={styles.btnText}>Sign out</ThemeText>
-          </Pressable>
+          </AnimatedPressable>
         </SignedIn>
 
-        <Pressable
+        <AnimatedPressable
+          entering={FadeInLeft.delay(300)}
           onPress={handlePresentSubscribeModal}
           style={[styles.btn, { borderColor: textColor }]}
         >
           <ThemeText style={styles.btnText}>Subscribe</ThemeText>
-        </Pressable>
+        </AnimatedPressable>
       </View>
 
-      <View style={styles.footer}>
+      <Animated.View style={styles.footer} entering={FadeIn.delay(300)}>
         <ThemeText style={styles.footerDate}>
           {format(new Date(), "MMMM, d, yyyy")}
         </ThemeText>
         <ThemeText style={styles.footerText}>No. 1151</ThemeText>
         <ThemeText style={styles.footerText}>Made by Simon</ThemeText>
-      </View>
+      </Animated.View>
     </View>
   );
 }
