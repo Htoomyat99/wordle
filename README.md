@@ -79,14 +79,10 @@ Follow these steps to run the project locally:
 - You can use hints by sliding up the bottom sheet.
 - Progress is saved locally, so you can continue your game anytime.
 
-## 🤝 Contributing
-
-Feel free to contribute by submitting pull requests or suggesting features. Ensure that you follow the code style and best practices used throughout the project.
-
 ## 📝 License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
 ## 📧 Contact
 
-If you have any questions or feedback, feel free to contact me at [your-email@example.com].
+If you have any questions or feedback, feel free to contact me at [htoomyat.20399@gmail.com].
