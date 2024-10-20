@@ -19,7 +19,7 @@ import {
 import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { Appearance, Platform, useColorScheme } from "react-native";
+import { Appearance, Platform, Text, useColorScheme, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useMMKVBoolean } from "react-native-mmkv";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
@@ -79,14 +79,16 @@ export default function RootLayout() {
                     headerTitle: () => (
                       <Logo width={scale(150)} height={verticalScale(40)} />
                     ),
-                    headerLeft: () => (
-                      <Ionicons
-                        onPress={() => router.back()}
-                        name="close"
-                        size={moderateScale(26)}
-                        color={Colors.light.gray}
-                      />
-                    ),
+                    headerTitleAlign: "center",
+                    headerLeft: () =>
+                      Platform.OS == "ios" && (
+                        <Ionicons
+                          onPress={() => router.back()}
+                          name="close"
+                          size={moderateScale(26)}
+                          color={Colors.light.gray}
+                        />
+                      ),
                   }}
                 />
 
@@ -109,6 +111,7 @@ export default function RootLayout() {
                     presentation: "fullScreenModal",
                     headerShadowVisible: false,
                     title: "",
+                    headerLeft: () => <View />,
                   }}
                 />
               </Stack>

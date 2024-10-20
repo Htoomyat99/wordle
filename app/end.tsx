@@ -220,7 +220,7 @@ export default End;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: "#FFFFFF",
     paddingHorizontal: s(40),
     paddingVertical: vs(10),
   },

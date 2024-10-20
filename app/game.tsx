@@ -348,7 +348,6 @@ const Page = () => {
                 </Animated.View>
               </Animated.View>
             ))}
-            <Text>1</Text>
           </Animated.View>
         ))}
       </View>

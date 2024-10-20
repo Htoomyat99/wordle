@@ -9,9 +9,16 @@ import {
 } from "@gorhom/bottom-sheet";
 import disc from "@jsamr/counter-style/presets/disc";
 import MarkedList from "@jsamr/react-native-li";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import React, { forwardRef, useCallback, useMemo } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 
@@ -21,6 +28,7 @@ const SubscribeModal = forwardRef<Ref>((props, ref) => {
   const snapPoints = useMemo(() => ["25%", "90%"], []);
   const { dismiss } = useBottomSheetModal();
   const { bottom } = useSafeAreaInsets();
+  const router = useRouter();
 
   const BENEFITS = [
     "Enjoy full access to Wordle, Spelling Bee, The Crossword and more.",
@@ -47,6 +55,14 @@ const SubscribeModal = forwardRef<Ref>((props, ref) => {
     []
   );
 
+  const goLogin = () => {
+    if (Platform.OS === "android") {
+      dismiss();
+    }
+
+    router.navigate("/login");
+  };
+
   return (
     <BottomSheetModal
       ref={ref}
@@ -57,9 +73,9 @@ const SubscribeModal = forwardRef<Ref>((props, ref) => {
     >
       <View style={styles.contentContainer}>
         <View style={styles.btnContainer}>
-          <Link href={"/login"} asChild>
+          <Pressable onPress={goLogin}>
             <Text style={styles.btnText}>LOGIN</Text>
-          </Link>
+          </Pressable>
 
           <Ionicons
             name="close"
