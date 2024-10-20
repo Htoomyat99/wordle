@@ -13,13 +13,15 @@ Welcome to the **Wordle Game**, a fun and interactive mobile game where players 
 - 🔥 **Firebase Integration**: Connect and store user data securely using Firebase.
 - 🔑 **Authentication**: User authentication provided by Clerk Expo.
 
-## 📱 Demo
+## 📱 Screenshots
 
-![Game Screenshot 1](@/assets/images/1.png)
-![Game Screenshot 2](@/assets/images/2.png)
-![Game Screenshot 3](@/assets/images/3.png)
-![Game Screenshot 4](@/assets/images/4.png)
-![Game Screenshot 5](@/assets/images/5.png)
+<p align="center">
+  <img src="./assets/images/1.png" alt="Login Screen" width="160"/>
+  <img src="./assets/images/2.png" alt="Card List Screen" width="160"/>
+  <img src="./assets/images/3.png" alt="Filter and Search Screen" width="160"/>
+  <img src="./assets/images/4.png" alt="Card Detail Screen" width="160"/>
+  <img src="./assets/images/5.png" alt="Collections Screen" width="160"/>
+</p>
 
 ## 🛠️ Tech Stack
 
@@ -39,36 +41,36 @@ Follow these steps to run the project locally:
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/yourusername/wordle-game.git
-    cd wordle-game
-    ```
+   ```bash
+   git clone https://github.com/yourusername/wordle-game.git
+   cd wordle-game
+   ```
 
 2. Install dependencies:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 3. Set up Firebase:
 
-    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/).
-    - Add Firebase credentials to your project by following [React Native Firebase setup guide](https://rnfirebase.io/).
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/).
+   - Add Firebase credentials to your project by following [React Native Firebase setup guide](https://rnfirebase.io/).
 
 4. Configure Clerk Expo:
 
-    - Create a Clerk account at [Clerk.dev](https://clerk.dev/).
-    - Follow the [Clerk Expo integration guide](https://clerk.dev/docs/expo) to set up authentication.
+   - Create a Clerk account at [Clerk.dev](https://clerk.dev/).
+   - Follow the [Clerk Expo integration guide](https://clerk.dev/docs/expo) to set up authentication.
 
 5. Build and run the project for Android or iOS:
 
-    ```bash
-    # For Android
-    npx expo run:android
+   ```bash
+   # For Android
+   npx expo run:android
 
-    # For iOS (macOS required)
-    npx expo run:ios
-    ```
+   # For iOS (macOS required)
+   npx expo run:ios
+   ```
 
 ## 🎮 How to Play
 
